@@ -1,14 +1,14 @@
 //
-//  CoreDataTests.swift
-//  CoreDataTests
+//  CoreDataExsampleTests.swift
+//  CoreDataExsampleTests
 //
-//  Created by Yasemin salan on 8.02.2025.
+//  Created by Yasemin salan on 9.02.2025.
 //
 
 import Testing
-@testable import CoreData
+@testable import CoreDataExsample
 
-struct CoreDataTests {
+struct CoreDataExsampleTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

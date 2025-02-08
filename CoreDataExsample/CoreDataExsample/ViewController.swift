@@ -1,16 +1,16 @@
 //
 //  ViewController.swift
-//  CoreData
+//  CoreDataExsample
 //
-//  Created by Yasemin salan on 8.02.2025.
+//  Created by Yasemin salan on 9.02.2025.
 //
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-
     @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.dataSource = self
@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
     }
     @objc func addButtonTapped() {
-        performSegue(withIdentifier: "toDetailVC", sender: n,l)
+        performSegue(withIdentifier: "toDetailVC", sender: nil)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
            return 5
@@ -31,7 +31,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
            let cell = UITableViewCell()
                  //cell.textLabel?.text! = "TableView"
                  var content = cell.defaultContentConfiguration()
-           content.text = ""
+           content.text = "cORE dATA"
                  cell.contentConfiguration = content
                  return cell
        }
