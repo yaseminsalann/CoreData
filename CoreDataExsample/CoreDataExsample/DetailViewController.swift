@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
@@ -57,6 +58,35 @@ class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UIN
     }
     
     @IBAction func saveClickButton(_ sender: Any) {
+        
+        //
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //AppDelegate içindeki context e  ulaşıldı.
+        let context = appDelegate.persistentContainer.viewContext
+        
+        
+        let newPaintingEntry = NSEntityDescription.insertNewObject(forEntityName: "Paintings", into: context)
+        newPaintingEntry.setValue(nameTextField.text!, forKey: "name")
+        newPaintingEntry.setValue(artistTextField.text, forKey: "artist")
+        
+        if let year = Int(yearTextField.text!){
+            //düzgün değer gelip gelmediğini kontrol etmek için eklenmişdir.
+            newPaintingEntry.setValue(year, forKey: "year")
+        }
+        newPaintingEntry.setValue(UUID(), forKey: "id")
+        //image i dataya çevirme
+        //compressionQuality demek ne kadar küçültüleceği bilgisini verir
+        let data = imageView.image!.jpegData(compressionQuality: 0.5)!
+        newPaintingEntry.setValue(data, forKey: "image")
+
+        do{
+            try context.save()
+            print("succes")
+        }catch{
+            print("error")
+        }
+       // appDelegate.saveContext()
+        //navigationController?.popViewController(animated: true)
     }
 
 }
