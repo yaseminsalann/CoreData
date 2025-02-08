@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     
     @IBOutlet weak var imageView: UIImageView!
@@ -25,6 +25,31 @@ class DetailViewController: UIViewController {
 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(gestureRecognizer)
+        
+        imageView.isUserInteractionEnabled = true
+        let imageTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectImage))
+        imageView.addGestureRecognizer(imageTapRecognizer)
+        
+        
+    }
+    @objc func selectImage(){
+        //kullanıcı image e tıkladığında galeri yada kameranın açılması işlemleri bu kısımda yapılır.
+        //UIImagePickerControllerDelegate,UINavigationControllerDelegate sınıflarını UIImagePickerController kullanabilmek için eklendi.
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        
+        //kameramı,galerimi açılacağı bilgisi seçilir.
+        picker.sourceType = .photoLibrary
+        //seçilen resimin üzerinde düzenleme yapılabilmesi için ayarlandı.
+        picker.allowsEditing = true
+        present(picker, animated: true, completion: nil)
+        
+        
+    }
+    //resim seçildikten sonra ne yapılacağı işlemleri burada yapılır.
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        imageView.image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
+        dismiss(animated: true, completion: nil)
     }
     @objc func dismissKeyboard(){
         //ekranda herhangi bir yere tıklandığında klavyeyi kapatılması için eklendi.
@@ -33,15 +58,5 @@ class DetailViewController: UIViewController {
     
     @IBAction func saveClickButton(_ sender: Any) {
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

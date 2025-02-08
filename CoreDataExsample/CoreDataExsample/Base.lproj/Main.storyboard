@@ -48,15 +48,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N45-Od-Xlj">
-                                <rect key="frame" x="58" y="79" width="276" height="252"/>
-                            </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dy3-PC-ii5">
                                 <rect key="frame" x="34" y="382" width="343" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ADQ-ns-s9n">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ADQ-ns-s9n">
                                 <rect key="frame" x="24" y="473" width="343" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -79,11 +76,14 @@
                                     <action selector="saveClickButton:" destination="hoS-Bh-UCc" eventType="touchUpInside" id="NpA-tb-f5i"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="select" translatesAutoresizingMaskIntoConstraints="NO" id="N45-Od-Xlj">
+                                <rect key="frame" x="106" y="79" width="229" height="252"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2ig-fx-xtD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="N45-Od-Xlj" firstAttribute="top" secondItem="2ig-fx-xtD" secondAttribute="top" constant="20" id="8DA-Ru-y89"/>
+                            <constraint firstItem="N45-Od-Xlj" firstAttribute="top" secondItem="2ig-fx-xtD" secondAttribute="top" constant="-24" id="8DA-Ru-y89"/>
                             <constraint firstItem="u6x-Rd-pAM" firstAttribute="leading" secondItem="2ig-fx-xtD" secondAttribute="leading" constant="72" id="8c4-l8-Wqg"/>
                             <constraint firstItem="dy3-PC-ii5" firstAttribute="trailing" secondItem="2Y8-eZ-h9m" secondAttribute="trailing" id="BLi-S6-mpm"/>
                             <constraint firstItem="dy3-PC-ii5" firstAttribute="leading" secondItem="2ig-fx-xtD" secondAttribute="leading" constant="34" id="HXa-WW-1tk"/>
@@ -92,10 +92,10 @@
                             <constraint firstItem="ADQ-ns-s9n" firstAttribute="top" secondItem="dy3-PC-ii5" secondAttribute="bottom" constant="57" id="Ytx-o0-ahz"/>
                             <constraint firstItem="2ig-fx-xtD" firstAttribute="bottom" secondItem="u6x-Rd-pAM" secondAttribute="bottom" constant="98" id="dA5-5u-GtJ"/>
                             <constraint firstItem="dy3-PC-ii5" firstAttribute="leading" secondItem="2Y8-eZ-h9m" secondAttribute="leading" id="dDQ-kQ-pon"/>
-                            <constraint firstItem="N45-Od-Xlj" firstAttribute="centerX" secondItem="ADQ-ns-s9n" secondAttribute="centerX" id="e7K-8x-FfP"/>
-                            <constraint firstItem="N45-Od-Xlj" firstAttribute="centerX" secondItem="m2b-hz-MzA" secondAttribute="centerX" id="evt-PY-SHD"/>
+                            <constraint firstItem="N45-Od-Xlj" firstAttribute="centerX" secondItem="ADQ-ns-s9n" secondAttribute="centerX" constant="25" id="e7K-8x-FfP"/>
+                            <constraint firstItem="N45-Od-Xlj" firstAttribute="centerX" secondItem="m2b-hz-MzA" secondAttribute="centerX" constant="24" id="evt-PY-SHD"/>
                             <constraint firstItem="2Y8-eZ-h9m" firstAttribute="top" secondItem="ADQ-ns-s9n" secondAttribute="bottom" constant="38" id="lMn-DT-fWX"/>
-                            <constraint firstItem="N45-Od-Xlj" firstAttribute="leading" secondItem="2ig-fx-xtD" secondAttribute="leading" constant="58" id="tTL-iW-7oi"/>
+                            <constraint firstItem="N45-Od-Xlj" firstAttribute="leading" secondItem="2ig-fx-xtD" secondAttribute="leading" constant="106" id="tTL-iW-7oi"/>
                             <constraint firstItem="dy3-PC-ii5" firstAttribute="top" secondItem="N45-Od-Xlj" secondAttribute="bottom" constant="51" id="v8k-wL-3NZ"/>
                             <constraint firstItem="2ig-fx-xtD" firstAttribute="trailing" secondItem="u6x-Rd-pAM" secondAttribute="trailing" constant="106" id="vcF-F7-3Ps"/>
                             <constraint firstItem="dy3-PC-ii5" firstAttribute="trailing" secondItem="m2b-hz-MzA" secondAttribute="trailingMargin" id="y1w-ed-LaQ"/>
@@ -133,6 +133,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="select" width="264" height="300"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
