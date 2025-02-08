@@ -85,8 +85,12 @@ class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UIN
         }catch{
             print("error")
         }
-       // appDelegate.saveContext()
-        //navigationController?.popViewController(animated: true)
+         
+        //veriyi işlediğimizi söyleyip coredatadan tekrar çekmek için yapılan işlemler
+        //yani datanın yenilendiğini bildirmemiz gerekiyor.
+        //NotificationCenter diğer viewControllara mesaj yollamamızı sağlar.mesaj gönderilen sayfada reloadData değikeni dinlenir ve böyle bir mesaj gelirse gerekli işlemler güncellenir.reloadData stringi yerine istediğiniz bir string değerini girebilirsiniz sadece dinlenen sayfadaki değişkenle aynı olması gerekiuor çünkü bu değişken dineleniyor.
+        NotificationCenter().post(name: NSNotification.Name("reloadData"), object: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 
 }
