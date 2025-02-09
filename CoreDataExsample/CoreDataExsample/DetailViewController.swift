@@ -15,6 +15,8 @@ class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UIN
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var artistTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
+    @IBOutlet weak var saveClickButton: UIButton!
+    
     var chosenPainting = ""
     var chosenPaintingId:UUID?
     
@@ -22,6 +24,8 @@ class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UIN
         super.viewDidLoad()
 
         if chosenPainting != ""{
+            //butonun görünürlüğünü ayarladık.true yapıldığında button görünmez oldu.
+            saveClickButton.isHidden = true
             //core data
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
@@ -56,6 +60,11 @@ class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UIN
                 print("error")
             }
             
+        }else{
+            saveClickButton.isEnabled = false
+            //butonun tıklanabilirliğini ayarladık. false ile buton tıklanamaz hale geldi
+            saveClickButton.isEnabled = false
+            //yukarıdaki ayarlarla button görünür ama tıklanamaz şeklinde ayarlandı
         }
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -84,6 +93,7 @@ class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UIN
     //resim seçildikten sonra ne yapılacağı işlemleri burada yapılır.
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imageView.image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
+        saveClickButton.isEnabled = true
         dismiss(animated: true, completion: nil)
     }
     @objc func dismissKeyboard(){
