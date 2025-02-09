@@ -14,6 +14,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var nameArray = [String]()
     var idArray = [UUID]()
     
+    var selectedPainting = ""
+    var selectedPaintingId: UUID?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +29,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     override func viewWillAppear(_ animated: Bool) {
         //DetailViewController sayfasında gönderilen mesajı burda dinliyoruz.
-        NotificationCenter.default.addObserver(self, selector: #selector(getDataFromCoreData), name: NSNotification.Name(rawValue: "reloadData"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getDataFromCoreData), name: NSNotification.Name(rawValue: "newData"), object: nil)
             }
             
     
@@ -44,16 +48,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         do{
            //geri döndürülen cevabı bir dizi içinde veriyor. coredata model objesi olarak gelir.
           let results = try context.fetch(fetchRequest) as! [NSManagedObject]
-            for result in results {
-                if let name = result.value(forKey: "name") as? String {
-                    self.nameArray.append(name)
+           if results.count > 0 {
+                for result in results {
+                    if let name = result.value(forKey: "name") as? String {
+                        self.nameArray.append(name)
+                    }
+                    if let id = result.value(forKey: "id") as? UUID {
+                        self.idArray.append(id)
+                    }
+                    //yeni veri geldiğinde tableview ı güncelleme işlemi yapılır.
+                    self.tableView.reloadData()
+                    
                 }
-                if let id = result.value(forKey: "id") as? UUID {
-                    self.idArray.append(id)
-                }
-                //yeni veri geldiğinde tableview ı güncelleme işlemi yapılır.
-                self.tableView.reloadData()
-                
             }
         }catch {
             print("error")
@@ -61,6 +67,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     @objc func addButtonTapped() {
+        selectedPainting = ""
         performSegue(withIdentifier: "toDetailVC", sender: nil)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,6 +80,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         content.text =  nameArray[indexPath.row]
         cell.contentConfiguration = content
         return cell
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailVC" {
+            let detailVC = segue.destination as! DetailViewController
+            //diğer sayfaya aktarmış oluyıruz.
+            detailVC.chosenPainting = selectedPainting
+            detailVC.chosenPaintingId = selectedPaintingId
+        }
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedPainting = nameArray[indexPath.row]
+        selectedPaintingId = idArray[indexPath.row]
+        performSegue(withIdentifier: "toDetailVC", sender: nil)
     }
 
 }

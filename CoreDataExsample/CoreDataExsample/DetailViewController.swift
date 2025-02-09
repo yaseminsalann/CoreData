@@ -12,18 +12,52 @@ class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UIN
     
     
     @IBOutlet weak var imageView: UIImageView!
-    
-    
     @IBOutlet weak var nameTextField: UITextField!
-    
     @IBOutlet weak var artistTextField: UITextField!
-    
-    
     @IBOutlet weak var yearTextField: UITextField!
+    var chosenPainting = ""
+    var chosenPaintingId:UUID?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if chosenPainting != ""{
+            //core data
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Paintings")
+            
+            //coredata dan verileri çekereken filtreleme işlemi yapılması
+            let idString = chosenPaintingId?.uuidString
+            //id si idString e eşit olan argümanı bul demek
+            fetchRequest.predicate = NSPredicate(format: "id == %@", idString!)
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do{
+              let results = try context.fetch(fetchRequest)
+                //results verisinin boyutu sıfırdan büyük ise geri kalan işlemleri yap
+                if results.count > 0{
+                    for result in results as! [NSManagedObject]{
+                        if let name = result.value(forKey: "name") as? String{
+                            nameTextField.text = name
+                        }
+                        if let artist = result.value(forKey: "artist") as? String{
+                            artistTextField.text = artist
+                        }
+                        if let year = result.value(forKey: "year") as? Int{
+                            yearTextField.text = String(year)
+                        }
+                        if let imageData = result.value(forKey: "image") as? Data{
+                            imageView.image = UIImage(data: imageData)
+                        }
+                    }
+                }
+            }catch {
+                print("error")
+            }
+            
+        }
+        
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(gestureRecognizer)
         
@@ -88,8 +122,8 @@ class DetailViewController: UIViewController,UIImagePickerControllerDelegate,UIN
          
         //veriyi işlediğimizi söyleyip coredatadan tekrar çekmek için yapılan işlemler
         //yani datanın yenilendiğini bildirmemiz gerekiyor.
-        //NotificationCenter diğer viewControllara mesaj yollamamızı sağlar.mesaj gönderilen sayfada reloadData değikeni dinlenir ve böyle bir mesaj gelirse gerekli işlemler güncellenir.reloadData stringi yerine istediğiniz bir string değerini girebilirsiniz sadece dinlenen sayfadaki değişkenle aynı olması gerekiuor çünkü bu değişken dineleniyor.
-        NotificationCenter().post(name: NSNotification.Name("reloadData"), object: nil)
+        //NotificationCenter diğer viewControllara mesaj yollamamızı sağlar.mesaj gönderilen sayfada newData değikeni dinlenir ve böyle bir mesaj gelirse gerekli işlemler güncellenir.newData stringi yerine istediğiniz bir string değerini girebilirsiniz sadece dinlenen sayfadaki değişkenle aynı olması gerekiuor çünkü bu değişken dineleniyor.
+        NotificationCenter().post(name: NSNotification.Name("newData"), object: nil)
         self.navigationController?.popViewController(animated: true)
     }
 
