@@ -94,6 +94,45 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         selectedPaintingId = idArray[indexPath.row]
         performSegue(withIdentifier: "toDetailVC", sender: nil)
     }
-
+    func tableView(_ tableView:UITableView,commit editingStyle:UITableViewCell.EditingStyle,forRowAt IndexPath:IndexPath){
+        if editingStyle == .delete{
+            let appDelegate=UIApplication.shared.delegate as! AppDelegate
+            let context=appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Paintings")
+            let idString = idArray[IndexPath.row].uuidString
+            fetchRequest.predicate = NSPredicate(format: "id == %@", idString)
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do{
+                let results = try! context.fetch(fetchRequest)
+                if results.count>0{
+                    for result in results as! [NSManagedObject]{
+                        if let id = result.value(forKey: "id") as? UUID{
+                            if id == idArray[IndexPath.row]{
+                                //coredatadan silme işlemi yapıldı
+                                context.delete(result)
+                                nameArray.remove(at: IndexPath.row)
+                                idArray.remove(at: IndexPath.row)
+                                self.tableView.reloadData()
+                                
+                                do{
+                                    try context.save()
+                                }catch{
+                                    print("error")
+                                }
+                                
+                                //yapı sağlam olmasaydı örneğin id değilde name den silmeye çalışsaydık for loop devam etmemesi için  arananan değer bulunup silindiyse break diyebilirz ve for loop dan çıkmış oluruz.
+                               // break
+                            }
+                        }
+                    }
+                }
+            }catch {
+                print("error")
+            }
+            
+            
+        }
+    }
 }
 
